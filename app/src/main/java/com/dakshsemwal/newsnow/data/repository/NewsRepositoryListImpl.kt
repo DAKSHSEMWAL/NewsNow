@@ -9,5 +9,5 @@ import javax.inject.Inject
 class NewsRepositoryListImpl @Inject constructor(val newsSourceAPI: NewsSourceAPI) :
     NewsRepository {
     override suspend fun getNews(country: String): NewsListDTO =
-        newsSourceAPI.getTrendingNews(CONSUMER_KEY, "us")
+        newsSourceAPI.getTrendingNews(CONSUMER_KEY, country)
 }

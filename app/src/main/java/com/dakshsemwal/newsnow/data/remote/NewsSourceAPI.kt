@@ -6,9 +6,9 @@ import retrofit2.http.Query
 
 interface NewsSourceAPI {
 
-    @GET("/top-headlines")
+    @GET("/v2/top-headlines")
     suspend fun getTrendingNews(
-        @Query("api_key") apiKey: String,
+        @Query("apiKey") apiKey: String,
         @Query("country") country: String
     ): NewsListDTO
 
