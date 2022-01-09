@@ -3,6 +3,7 @@ package com.dakshsemwal.newsnow.presentation.ui
 import android.graphics.Movie
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
@@ -28,8 +29,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var temp: ArrayList<Article>
 
     private lateinit var adapter: NewsAdapter
-
-    private var cardAdapter: PagerAdapter? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -74,19 +73,33 @@ class MainActivity : AppCompatActivity() {
         homeViewModel.state.observe(this, {
             it.let { resource ->
                 if (resource.isLoading) {
-
+                    //When Data is Loading
+                    setViewVisibility(View.VISIBLE, View.GONE, View.GONE, View.GONE)
                 } else {
                     if (resource.error.isNotBlank()) {
+                        //When any error occurs during network call
+                        setViewVisibility(View.GONE, View.GONE, View.GONE, View.VISIBLE)
                     } else {
                         totalInThisPage =resource.newsListDTO?.totalResults ?: 0
+                        //If Network call is successful but there is no data
+                        setViewVisibility(View.GONE, View.GONE, View.VISIBLE, View.GONE)
                         resource.newsList?.let { movieList ->
                             list.addAll(movieList)
                             adapter.submitList(list)
+                            setViewVisibility(View.GONE, View.VISIBLE, View.GONE, View.GONE)
                         }
                     }
                 }
             }
         })
+    }
+
+    //Set Visibility of views representing different states of network calls
+    private fun setViewVisibility(loader: Int, recyclerView: Int, noData: Int, error: Int) {
+        binding.loading.visibility = loader
+        binding.recyclerView.visibility = recyclerView
+        binding.noData.visibility = noData
+        binding.error.visibility = error
     }
 
 }

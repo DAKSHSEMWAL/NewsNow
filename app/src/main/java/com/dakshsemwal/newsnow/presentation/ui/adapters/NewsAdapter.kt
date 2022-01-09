@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.dakshsemwal.newsnow.R
 import com.dakshsemwal.newsnow.databinding.ItemCardBinding
 import com.dakshsemwal.newsnow.domain.model.Article
 
@@ -39,9 +40,18 @@ class NewsAdapter(
 
         fun bind(article: Article, position: Int) {
             with(itemMovieBinding) {
-                Glide.with(itemMovieBinding.root.context)
-                    .load(article.urlToImage)
-                    .into(imgBanner)
+                if(article.urlToImage==null) {
+                    Glide.with(itemMovieBinding.root.context)
+                        .load(R.drawable.ic_news)
+                        .error(R.drawable.ic_news)
+                        .into(imgBanner)
+                }
+                else{
+                    Glide.with(itemMovieBinding.root.context)
+                        .load(article.urlToImage)
+                        .error(R.drawable.ic_news)
+                        .into(imgBanner)
+                }
                 itemMovieBinding.title.text = article.title
                 itemMovieBinding.description.text = article.description
                 itemMovieBinding.root.setOnClickListener {

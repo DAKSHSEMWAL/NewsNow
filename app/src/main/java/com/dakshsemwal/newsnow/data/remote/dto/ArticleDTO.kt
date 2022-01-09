@@ -4,15 +4,16 @@ import com.dakshsemwal.newsnow.domain.model.Article
 import com.google.gson.annotations.SerializedName
 
 data class ArticleDTO(
-    val author: String,
-    val content: String,
-    val description: String,
-    val publishedAt: String,
+    val author: String? = null,
+    val content: String?=null,
+    val description: String? = null,
+    val publishedAt: String? = null,
     @SerializedName("source")
-    val source: SourceDTO,
-    val title: String,
-    val url: String,
-    val urlToImage: String
+    val source: SourceDTO? = null,
+    val title: String? = null,
+    val url: String? = null,
+    @SerializedName("urlToImage")
+    val urlToImage: String? = null
 )
 
 fun ArticleDTO.toArticle(): Article =

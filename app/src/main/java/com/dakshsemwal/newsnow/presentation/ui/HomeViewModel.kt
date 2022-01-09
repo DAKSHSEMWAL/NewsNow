@@ -28,17 +28,14 @@ class HomeViewModel @Inject constructor(
         getMovieUseCase().onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    Log.e("sfksdf4555k","fdsdfsdfs1212312fsfsfs")
                     _state.value = NewsState(newsListDTO = result.data)
                 }
                 is Resource.Error -> {
-                    Log.e("sfksdf4555k","fdsdfsdfs1212312f")
                     _state.value = NewsState(
                         error = result.message ?: "An unexpected error occurred"
                     )
                 }
                 is Resource.Loading -> {
-                    Log.e("sfksdf4555k","fdsdfsdfsf")
                     _state.value = NewsState(isLoading = true)
                 }
             }
